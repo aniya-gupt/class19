@@ -39,7 +39,7 @@ function setup() {
 
   ground=createSprite(width/2,height/2,width,height)
   ground.addImage(backgroundImage)
-  ground.scale=0.3
+  ground.scale=0.39
 
   invisibleGround=createSprite(width/2,height-20,width,10)
   invisibleGround.visible=false
