@@ -17,10 +17,10 @@ var gameOver,player,playerimg
 
 function preload(){
 
-    playerimg =   loadAnimation("player.png");
-    player_collided = loadAnimation("player.png");
+    playerimg =   loadImage("player.png");
+    player_collided = loadImage("player.png");
     
-    backgroundImage = loadImage("bg.jpg");
+    backgroundImage = loadImage("backgeound.jpg");
     
     
     obstacle1 = loadImage("hurdle1 .jpg");
@@ -35,15 +35,25 @@ function preload(){
 
 function setup() {
  createCanvas (windowWidth,windowHeight)
-  player=createSprite(50,height-100)
-  player.addImage(playerimg)
 
 
-  ground=createSprite(width/2,height-10,width,10)
+  ground=createSprite(width/2,height/2,width,height)
   ground.addImage(backgroundImage)
+  ground.scale=0.3
 
   invisibleGround=createSprite(width/2,height-20,width,10)
   invisibleGround.visible=false
+
+  gameOver=createSprite(width/2,height/2)
+  gameOver.addImage(gameOverImg)
+  gameOver.visible=false
+
+    player=createSprite(50,height-100)
+  player.addImage(playerimg)
+  player.scale=0.5
+  player.debug=true
+  player.setCollider("circle",0,0,85)
+
 
   obstaclesGroup= new Group()
 
@@ -57,10 +67,9 @@ function draw() {
     score = score + Math.round(getFrameRate()/60);
     background.velocityX = -(6 + 3*score/100);
    
-    if( touches.length>0 || keyDown("space") && player.y >= height-120) {
+    if( keyDown("space") && player.y >= height-120) {
       player.velocityY = -12;
-      touches=[]
-    }
+         }
   
     player.velocityY = player.velocityY + 0.8
   
@@ -85,7 +94,7 @@ function draw() {
     obstaclesGroup.setVelocityXEach(0);
     
    
-    player.changeAnimation("collided",player_collided);
+    // player.changeAnimation("collided",player_collided);
     
     
     obstaclesGroup.setLifetimeEach(-1);
@@ -118,8 +127,7 @@ function spawnObstacles() {
               break;
       case 4: obstacle.addImage(obstacle4);
               break;
-  
-              break;
+              
       default: break;
     }
     
